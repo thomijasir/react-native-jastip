@@ -1,10 +1,7 @@
 import { Dimensions, PixelRatio, Platform, StatusBar } from 'react-native';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 
-const {
-  width: SCREEN_WIDTH,
-  height: SCREEN_HEIGHT,
-} = Dimensions.get('window');
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const widthBaseScale = SCREEN_WIDTH / 414;
 const heightBaseScale = SCREEN_HEIGHT / 896;
 
@@ -52,5 +49,5 @@ export default {
   scaleFont,
   scaleSize,
   windowWidth,
-	windowHeight
+  windowHeight,
 };

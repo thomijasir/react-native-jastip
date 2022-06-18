@@ -4,9 +4,9 @@ import {
   scaleWidth,
   scaleFont,
   scaleSize,
-} from '../../utils/Scale';
-import Color from '../../utils/Color';
-import Layout from '../../utils/Layout';
+} from '../../assets/styles/Mixins';
+import Colors from '../../assets/styles/Colors';
+import Layout from '../../assets/styles/Layout';
 
 const styles = () =>
   StyleSheet.create({

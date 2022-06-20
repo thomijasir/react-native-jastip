@@ -26,7 +26,10 @@ export const convertEpochToHour = (timestamp: number) => {
   const ms = timestamp * 1000;
   const time = new Date(ms);
   const hour = time.getHours();
-	const minute = Number(time.getMinutes()) >= 10 ? time.getMinutes(): `0${time.getMinutes()}`;
+  const minute =
+    Number(time.getMinutes()) >= 10
+      ? time.getMinutes()
+      : `0${time.getMinutes()}`;
   return `${hour}:${minute}`;
 };
 
@@ -34,7 +37,10 @@ export const convertEpochToTime = (timestamp: number) => {
   const ms = timestamp * 1000;
   const time = new Date(ms);
   const hour = time.getHours();
-  const minute = Number(time.getMinutes()) >= 10 ? time.getMinutes(): `0${time.getMinutes()}`;
+  const minute =
+    Number(time.getMinutes()) >= 10
+      ? time.getMinutes()
+      : `0${time.getMinutes()}`;
   const year = time.getUTCFullYear();
   const month = time.getMonth();
   const date = time.getDate();
@@ -47,6 +53,14 @@ export const getMonthYear = (timestamp: number) => {
   const year = time.getUTCFullYear();
   const month = time.getMonth();
   return `${monthName[month]} ${year}`;
+};
+
+export const shortDate = (date: string) => {
+  const x = new Date(date);
+  return `${x.getDate()}/${x.getMonth() + 1}/${x
+    .getFullYear()
+    .toString()
+    .slice(2)}`;
 };
 
 export default {

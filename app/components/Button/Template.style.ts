@@ -5,8 +5,8 @@ import {
   scaleFont,
   scaleSize,
 } from '../../assets/styles/Mixins';
-import COLORS from '../../assets/styles/Colors';
-import LAYOUT from '../../assets/styles/Layout';
+import Colors from '../../assets/styles/Colors';
+import Layout from '../../assets/styles/Layout';
 
 const styles = () =>
   StyleSheet.create({

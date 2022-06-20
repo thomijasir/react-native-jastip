@@ -11,7 +11,16 @@ export const truncateString = (string: string, maxLength: number) => {
   }
 };
 
-export const arrayAllItemEqual = (arr: Array<any>) => arr.every((v) => v === arr[0]);
+export const limitString = (string: string, maxLength: number) => {
+  if (string.length > maxLength) {
+    return `${string.slice(0, maxLength)}...`;
+  } else {
+    return string;
+  }
+};
+
+export const arrayAllItemEqual = (arr: Array<any>) =>
+  arr.every((v) => v === arr[0]);
 
 export const shuffleArray = (array: Array<any>) => {
   // reassign to make sure original array not shuffled
@@ -30,4 +39,5 @@ export const shuffleArray = (array: Array<any>) => {
   return shuffled;
 };
 
-export const alphabetOnly = (string: string) => string ? string.replace(/[0-9]/g, '') : '';
+export const alphabetOnly = (string: string) =>
+  string ? string.replace(/[0-9]/g, '') : '';

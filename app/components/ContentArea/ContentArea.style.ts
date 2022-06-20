@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native';
+import { scaleSize, scaleHeight, scaleWidth } from '../../assets/styles/Mixins';
 import color from '../../assets/styles/Colors';
 
 const styles = (backgroundColor?: string) =>
   StyleSheet.create({
-    container: {
-      height: '100%',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      backgroundColor: backgroundColor ? backgroundColor : color.WHITE,
+    main: {
+      width: '100%',
+      paddingHorizontal: scaleWidth(16),
+      paddingVertical: scaleHeight(8),
     },
   });
 

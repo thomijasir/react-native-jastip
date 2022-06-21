@@ -22,8 +22,16 @@ const styles = () =>
       marginLeft: scaleSize(12),
     },
     rowLeft: {
-      flexBasis: scaleSize(60),
+      flexBasis: scaleSize(70),
     },
+    rowLeftPicture: {
+      width: scaleWidth(60),
+      height: scaleHeight(76),
+      borderRadius: scaleSize(76 / 2),
+      borderColor: COLORS.WHITE,
+      borderWidth: scaleSize(2),
+    },
+
     rowRight: {
       flex: 1,
     },

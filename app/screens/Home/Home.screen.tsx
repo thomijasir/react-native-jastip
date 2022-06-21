@@ -30,6 +30,10 @@ export const HomeScreenNamespace = 'HomeScreen';
 
 const HomeScreen: FC<IHomeScreenProps> = (props) => {
   const { navigation } = props;
+
+  const handleProductPress = (id: string) => {
+    navigation.navigate('Product', { productId: id });
+  };
   return (
     <SafeAreaView>
       <StatusBar animated={true} backgroundColor="#151515" />
@@ -40,32 +44,7 @@ const HomeScreen: FC<IHomeScreenProps> = (props) => {
           <Text style={{ marginVertical: 12, fontSize: 16 }}>
             Hi, <Text style={{ fontWeight: 'bold' }}>Thomi Jasir</Text>
           </Text>
-          {/* <Button
-            title="Go to About"
-            onPress={() => navigation.navigate('About')}
-          />
-          <DeviderComp />
-          <Button
-            title="Go to Product"
-            onPress={() => navigation.navigate('Product')}
-          />
-          <DeviderComp />
-          <Button
-            title="Go to Cart"
-            onPress={() => navigation.navigate('Cart')}
-          />
-          <DeviderComp />
-          <Button
-            title="Go to Payment"
-            onPress={() => navigation.navigate('Payment')}
-          />
-          <DeviderComp />
-          <Button
-            title="Go to Payment Result"
-            onPress={() => navigation.navigate('PaymentResult')}
-          /> */}
         </ContentArea>
-        <DeviderComp />
         <BoxBalanceComp />
         <ContentArea>
           <Text style={GS.title}>Newest Feed</Text>
@@ -74,10 +53,10 @@ const HomeScreen: FC<IHomeScreenProps> = (props) => {
         <ContentArea>
           <Text style={GS.title}>Newest Item</Text>
         </ContentArea>
-        <ProductCarouselComp />
+        <ProductCarouselComp onPress={handleProductPress} />
         <ContentArea>
           <Text style={GS.title}>Popular Item</Text>
-          <ProductListComp />
+          <ProductListComp onPress={handleProductPress} />
         </ContentArea>
       </ScrollView>
       <MainNavigationComp navigation={navigation} />

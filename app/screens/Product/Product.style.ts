@@ -16,7 +16,7 @@ const styles = () =>
   StyleSheet.create({
     main: {
       width: '100%',
-      color: '#000',
+      flex: 1,
       backgroundColor: COLORS.WHITE,
     },
     productImage: {
@@ -104,7 +104,7 @@ const styles = () =>
     footerControl: {
       display: 'flex',
       flexDirection: 'row',
-      marginVertical: scaleSize(24),
+      padding: scaleSize(16),
       alignContent: 'center',
       alignItems: 'center',
     },
@@ -116,6 +116,43 @@ const styles = () =>
     orderBtn: {
       flexGrow: 1,
       paddingLeft: scaleSize(16),
+    },
+    centeredView: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: scaleSize(22),
+    },
+    modalView: {
+      backgroundColor: 'white',
+      borderRadius: scaleSize(8),
+      paddingHorizontal: scaleSize(24),
+      paddingVertical: scaleSize(18),
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+    },
+    modalBtn: {
+      display: 'flex',
+      flexDirection: 'row',
+    },
+    spacingTextModal: {
+      fontSize: FONT_SIZE_16,
+      marginVertical: scaleSize(24),
+    },
+    rowModalBtnLeft: {
+      flexBasis: scaleSize(120),
+      paddingRight: scaleSize(8),
+    },
+    rowModalBtnRight: {
+      flexBasis: scaleSize(120),
+      paddingleft: scaleSize(8),
     },
   });
 

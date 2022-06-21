@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+import { NavigationHelpers, ParamListBase } from '@react-navigation/core';
 import { limitString } from '../../utils/Helper';
 import { shortDate } from '../../utils/Time';
 import ContentArea from '../../components/ContentArea/ContentArea.comp';
@@ -16,13 +17,15 @@ import { formatIDR } from '../../utils/Currency';
 import Style from './Payment.style';
 import GS from '../../assets/styles/General';
 
-export type IPaymentScreenProps = {};
+export type IPaymentScreenProps = {
+  navigation: NavigationHelpers<ParamListBase>;
+};
 
 export const PaymentScreenDefaultProps = {};
 
 export const PaymentScreenNamespace = 'PaymentScreen';
 
-const PaymentScreen: FC<IPaymentScreenProps> = () => {
+const PaymentScreen: FC<IPaymentScreenProps> = ({ navigation }) => {
   const CART_LIST = [
     {
       id: 'x1',
@@ -127,7 +130,7 @@ const PaymentScreen: FC<IPaymentScreenProps> = () => {
     });
   };
   const handlePay = () => {
-    console.log('PAY SUCCESS');
+    navigation.navigate('PaymentResult');
   };
   const handleAdd = (id: any) => () => {
     console.log('ADD ID: ', id);
@@ -170,15 +173,26 @@ const PaymentScreen: FC<IPaymentScreenProps> = () => {
       </ScrollView>
       <View>
         <DeviderComp />
-        <View style={Style().spacingFooter}>
-          <ContentArea>
-            <ButtonComp
-              style="btn primary doubleRounded"
-              onPress={handlePay}
-              title="Pay!"
-            />
-          </ContentArea>
-        </View>
+        <ContentArea>
+          <View style={Style().spacingFooter}>
+            <View style={Style().footerImage}>
+              <Image
+                source={require('../../assets/icons/dana-logo-round-icon.png')}
+              />
+            </View>
+            <View style={Style().footerText}>
+              <Text>Dana Balance</Text>
+              <Text style={Style().textBalance}>{formatIDR(2500000)}</Text>
+            </View>
+            <View style={Style().footerBtn}>
+              <ButtonComp
+                style="btn primary doubleRounded"
+                onPress={handlePay}
+                title="Pay!"
+              />
+            </View>
+          </View>
+        </ContentArea>
       </View>
     </SafeAreaView>
   );

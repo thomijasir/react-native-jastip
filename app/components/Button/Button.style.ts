@@ -21,6 +21,8 @@ const styles = StyleSheet.create({
     borderRadius: scaleSize(16),
   },
   primary: {
+    borderWidth: scaleSize(2),
+    borderColor: '#E1FF29',
     backgroundColor: '#E1FF29',
   },
   outlineBlack: {

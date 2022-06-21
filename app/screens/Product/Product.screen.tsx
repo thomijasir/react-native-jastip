@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -6,7 +6,12 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Modal,
+  Alert,
 } from 'react-native';
+import Toast from 'react-native-simple-toast';
+import { RouteProp } from '@react-navigation/native';
+import { NavigationHelpers, ParamListBase } from '@react-navigation/core';
 import ContentArea from '../../components/ContentArea/ContentArea.comp';
 import DeviderComp from '../../components/Devider/Devider.comp';
 import { formatIDR } from '../../utils/Currency';
@@ -16,22 +21,91 @@ import Style from './Product.style';
 import GS from '../../assets/styles/General';
 import ButtonComp from '../../components/Button/Button.comp';
 
-export type IProductScreenProps = {};
+type RootStackParamList = {
+  productId: any;
+};
+
+export type IProductScreenProps = {
+  route: RouteProp<RootStackParamList>;
+  navigation: NavigationHelpers<ParamListBase>;
+};
 
 export const ProductScreenDefaultProps = {};
 
 export const ProductScreenNamespace = 'ProductScreen';
 
-const ProductScreen: FC<IProductScreenProps> = () => {
+const ProductScreen: FC<IProductScreenProps> = ({ route, navigation }) => {
+  const [state, mState] = useState({
+    showModal: false,
+  });
+
+  const setState = (obj: any) => {
+    mState((prevState: any) => ({
+      ...prevState,
+      ...obj,
+    }));
+  };
+
+  useEffect(() => {
+    console.log('PRODUCT DETAILS: ', route.params?.productId);
+  }, []);
+
+  useEffect(() => {
+    console.log('PRODUCT STATE: ', state);
+  }, [state]);
+
+  const handleAddToCart = () => {
+    setState({ showModal: true });
+  };
+
+  const handlePositiveModal = () => {
+    Toast.show('Product Added');
+    setTimeout(() => {
+      navigation.goBack();
+    }, 1000);
+  };
+
+  const handleNegativeModal = () => {
+    setState({ showModal: false });
+  };
+
   return (
     <SafeAreaView style={Style().main}>
-      <ScrollView>
-        <View>
-          <Image
-            style={Style().productImage}
-            source={{ uri: 'https://picsum.photos/200/300' }}
-          />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={state.showModal}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setState({ showModal: !state.showModal });
+        }}>
+        <View style={Style().centeredView}>
+          <View style={Style().modalView}>
+            <Text style={Style().spacingTextModal}>Add Product to Cart</Text>
+            <View style={Style().modalBtn}>
+              <View style={Style().rowModalBtnLeft}>
+                <ButtonComp
+                  style="btn outlineBlack rounded"
+                  title="Cancel"
+                  onPress={handleNegativeModal}
+                />
+              </View>
+              <View style={Style().rowModalBtnRight}>
+                <ButtonComp
+                  style="btn primary rounded"
+                  title="add"
+                  onPress={handlePositiveModal}
+                />
+              </View>
+            </View>
+          </View>
         </View>
+      </Modal>
+      <ScrollView>
+        <Image
+          style={Style().productImage}
+          source={{ uri: 'https://picsum.photos/200/300' }}
+        />
         <ContentArea>
           <Text style={Style().price}>{formatIDR(2500000)}</Text>
           <Text style={Style().desc}>
@@ -84,28 +158,24 @@ const ProductScreen: FC<IProductScreenProps> = () => {
           </View>
         </ContentArea>
         <DeviderComp />
-        <ContentArea>
-          <View style={Style().footerControl}>
-            <TouchableOpacity
-              style={Style().chatBtn}
-              activeOpacity={0.8}
-              onPress={() => {
-                console.log('Mantap!');
-              }}>
-              <Image source={require('../../assets/icons/chat-icon.png')} />
-            </TouchableOpacity>
-            <View style={Style().orderBtn}>
-              <ButtonComp
-                onPress={() => {
-                  console.log('Mancing Mania Mantap');
-                }}
-                style="btn primary doubleRounded"
-                title="Pencet Aku Mas!"
-              />
-            </View>
-          </View>
-        </ContentArea>
       </ScrollView>
+      <View style={Style().footerControl}>
+        <TouchableOpacity
+          style={Style().chatBtn}
+          activeOpacity={0.8}
+          onPress={() => {
+            console.log('Mantap!');
+          }}>
+          <Image source={require('../../assets/icons/chat-icon.png')} />
+        </TouchableOpacity>
+        <View style={Style().orderBtn}>
+          <ButtonComp
+            onPress={handleAddToCart}
+            style="btn primary doubleRounded"
+            title="Add To Cart!"
+          />
+        </View>
+      </View>
     </SafeAreaView>
   );
 };

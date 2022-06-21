@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import { NavigationHelpers, ParamListBase } from '@react-navigation/core';
 import GS from '../../assets/styles/General';
 import ButtonComp from '../../components/Button/Button.comp';
 import ContentArea from '../../components/ContentArea/ContentArea.comp';
@@ -16,13 +17,15 @@ import { limitString } from '../../utils/Helper';
 import { shortDate } from '../../utils/Time';
 import Style from './Cart.style';
 
-export type ICartScreenProps = {};
+export type ICartScreenProps = {
+  navigation: NavigationHelpers<ParamListBase>;
+};
 
 export const CartScreenDefaultProps = {};
 
 export const CartScreenNamespace = 'CartScreen';
 
-const CartScreen: FC<ICartScreenProps> = () => {
+const CartScreen: FC<ICartScreenProps> = ({ navigation }) => {
   const CART_LIST = [
     {
       id: 'x1',
@@ -73,7 +76,7 @@ const CartScreen: FC<ICartScreenProps> = () => {
   };
 
   const handleOrder = () => {
-    console.log('CONTINUE NAVIGATE');
+    navigation.navigate('Payment');
   };
 
   const renderItem = (cartList: any) => {

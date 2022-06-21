@@ -1,5 +1,13 @@
 import React, { FC } from 'react';
-import { Text, View, FlatList, Animated, Image } from 'react-native';
+import {
+  Text,
+  View,
+  FlatList,
+  Animated,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import { limitString } from '../../utils/Helper';
 import { shortDate } from '../../utils/Time';
 import Style from './FeedCarousel.style';
@@ -21,33 +29,37 @@ const FeedCarouselComp: FC<IFeedCarouselCompProps> = () => {
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
       name: 'Thomi Jasir',
-      picture: 'https://picsum.photos/id/1/50/50',
+      picture: 'https://picsum.photos/50',
       text: 'Gw rencana akan ke Thailand tanggal 17 Oct ini. Kalo ada yang mau jastip silahkan chat ya.',
       date: '2022-07-10',
     },
     {
       id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
       name: 'Agung Sutopo',
-      picture: 'https://reactnative.dev/img/tiny_logo.png',
+      picture: 'https://picsum.photos/50',
       text: 'Mau ke zimbabwe tanggal 10 bulan ini balik tgl 19',
       date: '2022-07-19',
     },
     {
       id: '58694a0f-3da1-471f-bd96-145571e29d72',
       name: 'Saha Maneh',
-      picture: 'https://reactnative.dev/img/tiny_logo.png',
+      picture: 'https://picsum.photos/50',
       text: 'Mau traveling ke tokoyo tanggal 10 balik tgl 20',
       date: '2022-07-20',
     },
   ];
 
+  const handleNavigate = (data: any) => () => {
+    Alert.alert(data.name, data.text);
+  };
+
   const renderItem = ({ item, index }: any) => (
-    <View style={Style().rowItem}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={Style().rowItem}
+      onPress={handleNavigate(item)}>
       <View style={Style().rowLeft}>
-        <Image
-          style={{ width: 50, height: 50 }}
-          source={require('../../assets/images/react-native-logo.png')}
-        />
+        <Image style={Style().rowLeftPicture} source={{ uri: item.picture }} />
       </View>
       <View style={Style().rowRight}>
         <View>
@@ -68,7 +80,7 @@ const FeedCarouselComp: FC<IFeedCarouselCompProps> = () => {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   return (

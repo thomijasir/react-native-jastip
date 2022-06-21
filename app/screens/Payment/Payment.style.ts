@@ -156,6 +156,28 @@ const styles = () =>
 
     spacingFooter: {
       marginVertical: scaleSize(16),
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+
+    footerImage: {
+      flexBasis: scaleSize(40),
+    },
+
+    footerText: {
+      flexGrow: 1,
+    },
+
+    textBalance: {
+      fontWeight: 'bold',
+      color: COLORS.BLACK,
+      fontSize: FONT_SIZE_16,
+      lineHeight: FONT_SIZE_24,
+      marginTop: scaleSize(2),
+    },
+    footerBtn: {
+      flexBasis: scaleSize(100),
     },
   });
 

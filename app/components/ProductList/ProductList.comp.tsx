@@ -1,17 +1,19 @@
 import React, { FC } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { formatIDR } from '../../utils/Currency';
 import { limitString } from '../../utils/Helper';
 import { shortDate } from '../../utils/Time';
 import Style from './ProductList.style';
 
-export type IProductListCompProps = {};
+export type IProductListCompProps = {
+  onPress: (id: string) => void;
+};
 
 export const ProductListCompDefaultProps = {};
 
 export const ProductListCompNamespace = 'ProductListComp';
 
-const ProductListComp: FC<IProductListCompProps> = () => {
+const ProductListComp: FC<IProductListCompProps> = ({ onPress }) => {
   const DATA = [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -67,7 +69,13 @@ const ProductListComp: FC<IProductListCompProps> = () => {
     <View style={Style().main}>
       {DATA.map((dataItem) => {
         return (
-          <View style={Style().item} key={dataItem.id}>
+          <TouchableOpacity
+            style={Style().item}
+            key={dataItem.id}
+            activeOpacity={0.8}
+            onPress={() => {
+              onPress(dataItem.id);
+            }}>
             <Image style={Style().itemImage} source={dataItem.picture} />
             <View style={Style().itemInfo}>
               <Text style={Style().itemName}>
@@ -81,7 +89,7 @@ const ProductListComp: FC<IProductListCompProps> = () => {
                 <Text> {shortDate(dataItem.date)}</Text>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         );
       })}
     </View>

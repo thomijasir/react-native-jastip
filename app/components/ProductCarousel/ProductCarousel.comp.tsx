@@ -1,17 +1,26 @@
 import React, { FC } from 'react';
-import { Text, View, FlatList, Animated, Image } from 'react-native';
+import {
+  Text,
+  View,
+  FlatList,
+  Animated,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import { formatIDR } from '../../utils/Currency';
 import { limitString } from '../../utils/Helper';
 import { shortDate } from '../../utils/Time';
 import Style from './ProductCarousel.style';
 
-export type IProductCarouselCompProps = {};
+export type IProductCarouselCompProps = {
+  onPress: (id: string) => void;
+};
 
 export const ProductCarouselCompDefaultProps = {};
 
 export const ProductCarouselCompNamespace = 'ProductCarouselComp';
 
-const ProductCarouselComp: FC<IProductCarouselCompProps> = () => {
+const ProductCarouselComp: FC<IProductCarouselCompProps> = ({ onPress }) => {
   const [scrollViewWidth, setScrollViewWidth] = React.useState(0);
   const boxWidth = scrollViewWidth * 0.8;
   const boxDistance = scrollViewWidth - boxWidth;
@@ -46,7 +55,12 @@ const ProductCarouselComp: FC<IProductCarouselCompProps> = () => {
   ];
 
   const renderItem = ({ item, index }: any) => (
-    <View style={Style().rowItem}>
+    <TouchableOpacity
+      style={Style().rowItem}
+      activeOpacity={0.8}
+      onPress={() => {
+        onPress(item.id);
+      }}>
       <View style={Style().colTop}>
         <Image style={Style().colTopImage} source={item.picture} />
       </View>
@@ -66,7 +80,7 @@ const ProductCarouselComp: FC<IProductCarouselCompProps> = () => {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   return (

@@ -10,6 +10,9 @@ const General = StyleSheet.create({
     fontSize: scaleFont(24),
     color: COLORS.BLACK,
   },
+  bold: {
+    fontWeight: 'bold',
+  },
 });
 
 export default General;

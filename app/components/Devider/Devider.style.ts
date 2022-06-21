@@ -5,14 +5,15 @@ import {
   scaleFont,
   scaleSize,
 } from '../../assets/styles/Mixins';
-import Colors from '../../assets/styles/Colors';
-import Layout from '../../assets/styles/Layout';
+import COLORS from '../../assets/styles/Colors';
+import LAYOUT from '../../assets/styles/Layout';
 
 const styles = () =>
   StyleSheet.create({
     main: {
       width: '100%',
-      margin: 16,
+      height: scaleHeight(8),
+      backgroundColor: '#F6F6F6',
     },
   });
 

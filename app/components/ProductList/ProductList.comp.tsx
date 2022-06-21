@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
-import { formatIDR } from '../../utils/Currency';
+import { formatIDRNoDecimal } from '../../utils/Currency';
 import { limitString } from '../../utils/Helper';
 import { shortDate } from '../../utils/Time';
 import Style from './ProductList.style';
@@ -81,7 +81,9 @@ const ProductListComp: FC<IProductListCompProps> = ({ onPress }) => {
               <Text style={Style().itemName}>
                 {limitString(dataItem.name, 23)}
               </Text>
-              <Text style={Style().itemPrice}>{formatIDR(dataItem.price)}</Text>
+              <Text style={Style().itemPrice}>
+                {formatIDRNoDecimal(dataItem.price)}
+              </Text>
               <View style={Style().itemDate}>
                 <Image
                   source={require('../../assets/icons/flight-land-icon.png')}

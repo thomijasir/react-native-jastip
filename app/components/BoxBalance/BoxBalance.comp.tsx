@@ -25,7 +25,12 @@ const BoxBalanceComp: FC<IBoxBalanceCompProps> = () => {
         </View>
       </View>
       <View style={Style().rowRight}>
-        <Button title="TopUp" onPress={() => Alert.alert('Success Top Upp!')} />
+        <Button
+          title="TopUp"
+          onPress={() =>
+            Alert.alert('Success', "You're success update dana balance.")
+          }
+        />
       </View>
     </View>
   );

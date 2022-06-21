@@ -44,7 +44,7 @@ const CountryListComp: FC<ICountryListCompProps> = () => {
   return (
     <View style={Style().main}>
       <View style={Style().title}>
-        <Text style={Style().titleBold}>Seller Based</Text>
+        <Text style={Style().titleBold}>Countries</Text>
         <Text>See all country</Text>
       </View>
       <View style={Style().flags}>

@@ -4,8 +4,10 @@ import Layout from '../../assets/styles/Layout';
 import { scaleHeight, scaleSize, scaleWidth } from '../../assets/styles/Mixins';
 import {
   FONT_SIZE_12,
+  FONT_SIZE_14,
   FONT_SIZE_16,
   FONT_SIZE_18,
+  FONT_SIZE_20,
   FONT_SIZE_24,
 } from '../../assets/styles/Typography';
 
@@ -14,6 +16,23 @@ const styles = () =>
     main: {
       flex: 1,
       backgroundColor: COLORS.WHITE,
+    },
+    emptyList: {
+      flex: 1,
+      ...Layout.center,
+    },
+    emptyTitle: {
+      fontWeight: 'bold',
+      fontSize: FONT_SIZE_16,
+      lineHeight: FONT_SIZE_24,
+      color: COLORS.BLACK,
+      marginTop: scaleSize(24),
+      marginBottom: scaleSize(12),
+    },
+    emptyDesc: {
+      fontSize: FONT_SIZE_14,
+      lineHeight: FONT_SIZE_18,
+      color: COLORS.BLACK,
     },
     items: {
       marginTop: scaleSize(12),

@@ -1,11 +1,11 @@
 export const formatIDR = (amount: number) => {
   const addedSeparator = amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.');
   const decimalFormatted = addedSeparator.replace(/.(?=[^.]*$)/, ',');
-  return `Rp. ${decimalFormatted}`;
+  return `Rp. ${addedSeparator}`;
 };
 
 export const formatIDRNoDecimal = (amount: number | string) => {
-	const amountNumber = Number(amount);
+  const amountNumber = Number(amount);
   const amountValue = isNaN(amountNumber) ? 0 : amountNumber;
   const decimalFormatted = amountValue.toLocaleString('id-ID', {
     style: 'decimal',
@@ -23,7 +23,7 @@ export const formatThousandSeparator = (amount: number) => {
   return `${decimalFormatted}`;
 };
 
-export const formatDecimal = (amount: number|string) => {
+export const formatDecimal = (amount: number | string) => {
   const amountNumber = Number(amount);
   const decimalFormatted = amountNumber.toLocaleString('id-ID', {
     style: 'decimal',

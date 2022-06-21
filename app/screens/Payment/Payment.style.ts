@@ -4,6 +4,7 @@ import Layout from '../../assets/styles/Layout';
 import { scaleSize, scaleHeight, scaleWidth } from '../../assets/styles/Mixins';
 import {
   FONT_SIZE_12,
+  FONT_SIZE_14,
   FONT_SIZE_16,
   FONT_SIZE_18,
   FONT_SIZE_24,
@@ -50,6 +51,7 @@ const styles = () =>
     rowProduct: {
       display: 'flex',
       flexDirection: 'row',
+      alignItems: 'center',
     },
     rowProductImage: {
       flexBasis: scaleSize(70),
@@ -64,13 +66,13 @@ const styles = () =>
     },
 
     productDesc: {
-      fontSize: FONT_SIZE_12,
+      fontSize: FONT_SIZE_14,
       lineHeight: FONT_SIZE_18,
       width: scaleWidth(240),
       color: COLORS.BLACK,
     },
     productPrice: {
-      fontSize: FONT_SIZE_16,
+      fontSize: FONT_SIZE_18,
       lineHeight: FONT_SIZE_24,
       fontWeight: 'bold',
       color: COLORS.BLACK,

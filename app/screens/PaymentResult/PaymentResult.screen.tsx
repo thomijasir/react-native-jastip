@@ -21,7 +21,7 @@ const PaymentResultScreen: FC<IPaymentResultScreenProps> = ({ navigation }) => {
   };
   return (
     <SafeAreaView style={Style().main}>
-      <Image source={require('../../assets/images/success-image.png')} />
+      <Image source={require('../../assets/images/payment-success.png')} />
       <Text style={Style().title}>Payment Success!</Text>
       <Text style={Style().desc}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit

@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import { formatIDR } from '../../utils/Currency';
+import { formatIDRNoDecimal } from '../../utils/Currency';
 import { limitString } from '../../utils/Helper';
 import { shortDate } from '../../utils/Time';
 import Style from './ProductCarousel.style';
@@ -66,7 +66,9 @@ const ProductCarouselComp: FC<IProductCarouselCompProps> = ({ onPress }) => {
       </View>
       <View style={Style().colBottom}>
         <Text style={Style().colBottomText}>{limitString(item.name, 23)}</Text>
-        <Text style={Style().colBottomPrice}>{formatIDR(item.price)}</Text>
+        <Text style={Style().colBottomPrice}>
+          {formatIDRNoDecimal(item.price)}
+        </Text>
         <View style={[Style().flexCol, Style().timeInfo]}>
           <View style={Style().flexCol}>
             <Image source={require('../../assets/icons/time-watch-icon.png')} />

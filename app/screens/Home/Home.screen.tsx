@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useContext, useEffect } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,6 +7,7 @@ import {
   Button,
 } from 'react-native';
 import { NavigationHelpers, ParamListBase } from '@react-navigation/core';
+import { AppContext } from '../../stores/AppProvider';
 // Component
 import HeadBarComp from '../../components/HeadBar/HeadBar.comp';
 import ContentArea from '../../components/ContentArea/ContentArea.comp';
@@ -19,6 +20,7 @@ import CountryListComp from '../../components/CountryList/CountryList.comp';
 import GS from '../../assets/styles/General';
 import Style from './Home.style';
 import DeviderComp from '../../components/Devider/Devider.comp';
+import LoadingMask from '../../components/LoadingMask/LoadingMask.comp';
 
 export type IHomeScreenProps = {
   navigation: NavigationHelpers<ParamListBase>;
@@ -30,6 +32,8 @@ export const HomeScreenNamespace = 'HomeScreen';
 
 const HomeScreen: FC<IHomeScreenProps> = (props) => {
   const { navigation } = props;
+
+  const context = useContext(AppContext);
 
   const handleProductPress = (id: string) => {
     navigation.navigate('Product', { productId: id });

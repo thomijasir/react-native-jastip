@@ -19,6 +19,15 @@ export const limitString = (string: string, maxLength: number) => {
   }
 };
 
+export const serializeObjectToURL = (obj: any) => {
+  let str = [];
+  for (let p in obj)
+    if (obj.hasOwnProperty(p)) {
+      str.push(p + '=' + obj[p]);
+    }
+  return encodeURIComponent(str.join('&'));
+};
+
 export const arrayAllItemEqual = (arr: Array<any>) =>
   arr.every((v) => v === arr[0]);
 
@@ -37,6 +46,15 @@ export const shuffleArray = (array: Array<any>) => {
     shuffled[randomIndex] = temporaryValue;
   }
   return shuffled;
+};
+
+export const getParameterByName = (name: string, url: string) => {
+  name = name.replace(/[\[\]]/g, '\\$&');
+  const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
 
 export const alphabetOnly = (string: string) =>

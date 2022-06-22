@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   SafeAreaView,
+  TextInput,
 } from 'react-native';
 import { NavigationHelpers, ParamListBase } from '@react-navigation/core';
 import Toast from 'react-native-simple-toast';
@@ -14,7 +15,7 @@ import { shortDate } from '../../utils/Time';
 import ContentArea from '../../components/ContentArea/ContentArea.comp';
 import DeviderComp from '../../components/Devider/Devider.comp';
 import ButtonComp from '../../components/Button/Button.comp';
-import { formatIDRNoDecimal } from '../../utils/Currency';
+import { formatRupiah } from '../../utils/Currency';
 import Style from './Payment.style';
 import GS from '../../assets/styles/General';
 import { AppContext } from '../../stores/AppProvider';
@@ -66,7 +67,7 @@ const PaymentScreen: FC<IPaymentScreenProps> = ({ navigation }) => {
   };
 
   const handlePay = () => {
-    setState({ cartList: [] });
+    context.setContext([], SET_CARTS);
     navigation.navigate('PaymentResult');
   };
 
@@ -87,13 +88,29 @@ const PaymentScreen: FC<IPaymentScreenProps> = ({ navigation }) => {
     if (getIndex < 0) {
       Toast.show('Error! Handle Decrese');
     } else {
-      if (newCartList[getIndex].productQty <= 0) {
+      if (newCartList[getIndex].productQty <= 1) {
         newCartList[getIndex].productQty = 1;
       } else {
         newCartList[getIndex].productQty -= 1;
       }
     }
     setState({ cartList: newCartList });
+  };
+
+  const isOverBalance = useMemo(() => {
+    if (parseInt(context.profile.BALANCE, 10) > totalPaymentAmount) {
+      return false;
+    }
+    return true;
+  }, [totalPaymentAmount]);
+
+  const handleChangeNotes = (id: string) => (val: string) => {
+    const newCartList: any = [...state.cartList];
+    const getIndex = newCartList.findIndex((item: any) => item.id === id);
+    if (getIndex >= 0) {
+      newCartList[getIndex].note = val;
+      setState({ cartList: newCartList });
+    }
   };
 
   const renderItem = (cartList: any) => {
@@ -128,7 +145,7 @@ const PaymentScreen: FC<IPaymentScreenProps> = ({ navigation }) => {
                 </Text>
               </View>
               <Text style={Style().productPrice}>
-                {formatIDRNoDecimal(cart.product.price)}
+                {formatRupiah(cart.product.price)}
               </Text>
             </View>
           </View>
@@ -165,6 +182,15 @@ const PaymentScreen: FC<IPaymentScreenProps> = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </View>
+          <View>
+            <Text style={Style().noteInputText}>Notes</Text>
+            <TextInput
+              style={Style().notesInput}
+              onChangeText={handleChangeNotes(cart.id)}
+              value={cart.note}
+              placeholder="Type notes for seller here"
+            />
+          </View>
         </View>
       );
     });
@@ -183,18 +209,20 @@ const PaymentScreen: FC<IPaymentScreenProps> = ({ navigation }) => {
             <View style={Style().colPayment}>
               <Text>Products Price</Text>
               <Text style={GS.bold}>
-                {formatIDRNoDecimal(totalProductPrice)}
+                {formatRupiah(totalProductPrice.toString())}
               </Text>
             </View>
             <View style={Style().colPayment}>
               <Text>Delivery Fee</Text>
               <Text style={GS.bold}>
-                {formatIDRNoDecimal(state.deliveryFee)}
+                {formatRupiah(state.deliveryFee.toString())}
               </Text>
             </View>
             <View style={Style().colPayment}>
               <Text>Platform Fee</Text>
-              <Text style={GS.bold}>{formatIDRNoDecimal(state.adminFee)}</Text>
+              <Text style={GS.bold}>
+                {formatRupiah(state.adminFee.toString())}
+              </Text>
             </View>
             <View style={Style().colPayment}>
               <DeviderComp />
@@ -202,7 +230,7 @@ const PaymentScreen: FC<IPaymentScreenProps> = ({ navigation }) => {
             <View style={[Style().colPayment]}>
               <Text style={GS.bold}>Total Payment</Text>
               <Text style={GS.bold}>
-                {formatIDRNoDecimal(totalPaymentAmount)}
+                {formatRupiah(totalPaymentAmount.toString())}
               </Text>
             </View>
           </View>
@@ -220,15 +248,26 @@ const PaymentScreen: FC<IPaymentScreenProps> = ({ navigation }) => {
             <View style={Style().footerText}>
               <Text>Dana Balance</Text>
               <Text style={Style().textBalance}>
-                {formatIDRNoDecimal(2500000)}
+                {formatRupiah(context.profile.BALANCE)}
               </Text>
+              {isOverBalance ? (
+                <Text style={Style().textStatus}>Insufficient balance!</Text>
+              ) : null}
             </View>
             <View style={Style().footerBtn}>
-              <ButtonComp
-                style="btn primary doubleRounded"
-                onPress={handlePay}
-                title="Pay!"
-              />
+              {isOverBalance ? (
+                <ButtonComp
+                  style="btn outlineBlack doubleRounded"
+                  onPress={() => {}}
+                  title="Pay!"
+                />
+              ) : (
+                <ButtonComp
+                  style="btn primary doubleRounded"
+                  onPress={handlePay}
+                  title="Pay!"
+                />
+              )}
             </View>
           </View>
         </ContentArea>

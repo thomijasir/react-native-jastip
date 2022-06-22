@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import {
   Text,
   View,
@@ -6,13 +6,15 @@ import {
   Animated,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
-import { formatIDRNoDecimal } from '../../utils/Currency';
+import { formatRupiah } from '../../utils/Currency';
 import { limitString } from '../../utils/Helper';
 import { shortDate } from '../../utils/Time';
 import Style from './ProductCarousel.style';
 
 export type IProductCarouselCompProps = {
+  productList: any;
   onPress: (id: string) => void;
 };
 
@@ -20,12 +22,26 @@ export const ProductCarouselCompDefaultProps = {};
 
 export const ProductCarouselCompNamespace = 'ProductCarouselComp';
 
-const ProductCarouselComp: FC<IProductCarouselCompProps> = ({ onPress }) => {
+const ProductCarouselComp: FC<IProductCarouselCompProps> = ({
+  productList,
+  onPress,
+}) => {
   const [scrollViewWidth, setScrollViewWidth] = React.useState(0);
-  const boxWidth = scrollViewWidth * 0.8;
+  const boxWidth = scrollViewWidth * (Platform.OS === 'ios' ? 0.9 : 0.8);
   const boxDistance = scrollViewWidth - boxWidth;
   const halfBoxDistance = boxDistance / 2;
   const pan = React.useRef(new Animated.ValueXY()).current;
+
+  const mapToProductCarousel = useMemo(() => {
+    return productList.map((item: any) => ({
+      id: item.id,
+      name: item.productName,
+      picture: item.productImageUrl,
+      price: item.price,
+      date: item.openPreOrderDate,
+      landed: item.sellerReturnDate,
+    }));
+  }, [productList]);
 
   const DATA = [
     {
@@ -62,23 +78,21 @@ const ProductCarouselComp: FC<IProductCarouselCompProps> = ({ onPress }) => {
         onPress(item.id);
       }}>
       <View style={Style().colTop}>
-        <Image style={Style().colTopImage} source={item.picture} />
+        <Image style={Style().colTopImage} source={{ uri: item.picture }} />
       </View>
       <View style={Style().colBottom}>
-        <Text style={Style().colBottomText}>{limitString(item.name, 23)}</Text>
-        <Text style={Style().colBottomPrice}>
-          {formatIDRNoDecimal(item.price)}
-        </Text>
+        <Text style={Style().colBottomText}>{limitString(item.name, 20)}</Text>
+        <Text style={Style().colBottomPrice}>{formatRupiah(item.price)}</Text>
         <View style={[Style().flexCol, Style().timeInfo]}>
           <View style={Style().flexCol}>
             <Image source={require('../../assets/icons/time-watch-icon.png')} />
-            <Text>{shortDate(item.date)}</Text>
+            <Text> {shortDate(item.date)}</Text>
           </View>
           <View style={Style().flexCol}>
             <Image
               source={require('../../assets/icons/flight-land-icon.png')}
             />
-            <Text>{shortDate(item.landed)}</Text>
+            <Text> {shortDate(item.landed)}</Text>
           </View>
         </View>
       </View>
@@ -88,7 +102,7 @@ const ProductCarouselComp: FC<IProductCarouselCompProps> = ({ onPress }) => {
   return (
     <FlatList
       horizontal
-      data={DATA}
+      data={mapToProductCarousel}
       contentInsetAdjustmentBehavior="never"
       snapToAlignment="center"
       decelerationRate="fast"

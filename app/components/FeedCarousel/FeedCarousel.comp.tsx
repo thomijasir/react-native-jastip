@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import {
   Text,
   View,
@@ -7,47 +7,38 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  Platform,
 } from 'react-native';
 import { limitString } from '../../utils/Helper';
 import { shortDate } from '../../utils/Time';
 import Style from './FeedCarousel.style';
 
-export type IFeedCarouselCompProps = {};
+export type IFeedCarouselCompProps = {
+  feedList: any;
+};
 
 export const FeedCarouselCompDefaultProps = {};
 
 export const FeedCarouselCompNamespace = 'FeedCarouselComp';
 
-const FeedCarouselComp: FC<IFeedCarouselCompProps> = () => {
+const FeedCarouselComp: FC<IFeedCarouselCompProps> = ({ feedList }) => {
   const [scrollViewWidth, setScrollViewWidth] = React.useState(0);
-  const boxWidth = scrollViewWidth * 0.8;
+  const boxWidth = scrollViewWidth * (Platform.OS === 'ios' ? 0.9 : 0.8);
   const boxDistance = scrollViewWidth - boxWidth;
   const halfBoxDistance = boxDistance / 2;
   const pan = React.useRef(new Animated.ValueXY()).current;
 
-  const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      name: 'Thomi Jasir',
-      picture: 'https://picsum.photos/50',
-      text: 'Gw rencana akan ke Thailand tanggal 17 Oct ini. Kalo ada yang mau jastip silahkan chat ya.',
-      date: '2022-07-10',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      name: 'Agung Sutopo',
-      picture: 'https://picsum.photos/50',
-      text: 'Mau ke zimbabwe tanggal 10 bulan ini balik tgl 19',
-      date: '2022-07-19',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      name: 'Saha Maneh',
-      picture: 'https://picsum.photos/50',
-      text: 'Mau traveling ke tokoyo tanggal 10 balik tgl 20',
-      date: '2022-07-20',
-    },
-  ];
+  const mapToFeedCarousel = useMemo(() => {
+    return feedList.map((item: any) => {
+      return {
+        id: item.id,
+        name: item.userName,
+        picture: item.imageUrl,
+        text: item.message,
+        date: item.returnDate,
+      };
+    });
+  }, [feedList]);
 
   const handleNavigate = (data: any) => () => {
     Alert.alert(data.name, data.text);
@@ -69,14 +60,25 @@ const FeedCarouselComp: FC<IFeedCarouselCompProps> = () => {
           <Text style={Style().rowRightText}>{limitString(item.text, 75)}</Text>
         </View>
         <View style={Style().rowRightDate}>
-          <View>
-            <Image
-              style={Style().rowRightDateImage}
-              source={require('../../assets/icons/w-flight-land-icon.png')}
-            />
+          <View style={Style().rowComments}>
+            <View>
+              <Image
+                style={Style().rowRightDateImage}
+                source={require('../../assets/icons/w-flight-land-icon.png')}
+              />
+            </View>
+            <Text style={Style().rowRightDateText}>
+              {' '}
+              {shortDate(item.date)}
+            </Text>
           </View>
-          <View>
-            <Text style={Style().rowRightDateText}>{shortDate(item.date)}</Text>
+          <View style={Style().rowComments}>
+            <View>
+              <Image
+                source={require('../../assets/icons/w-comments-icon.png')}
+              />
+            </View>
+            <Text style={Style().rowRightDateText}> 4 Comments</Text>
           </View>
         </View>
       </View>
@@ -86,7 +88,7 @@ const FeedCarouselComp: FC<IFeedCarouselCompProps> = () => {
   return (
     <FlatList
       horizontal
-      data={DATA}
+      data={mapToFeedCarousel}
       contentInsetAdjustmentBehavior="never"
       snapToAlignment="center"
       decelerationRate="fast"

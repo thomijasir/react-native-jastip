@@ -15,11 +15,11 @@ const styles = () =>
     rowItem: {
       display: 'flex',
       flexDirection: 'row',
-      backgroundColor: '#151515',
+      backgroundColor: '#4800A3',
       borderRadius: scaleSize(8),
       width: scaleWidth(330),
       padding: scaleSize(16),
-      marginLeft: scaleSize(12),
+      marginRight: scaleSize(12),
     },
     rowLeft: {
       flexBasis: scaleSize(70),
@@ -44,12 +44,13 @@ const styles = () =>
       color: COLORS.WHITE,
       fontSize: scaleFont(12),
       lineHeight: scaleSize(18),
-      marginVertical: scaleSize(12),
+      marginVertical: scaleSize(8),
     },
     rowRightDate: {
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'space-between',
     },
     rowRightDateText: {
       color: COLORS.WHITE,
@@ -57,6 +58,11 @@ const styles = () =>
     rowRightDateImage: {
       width: scaleWidth(16),
       height: scaleHeight(16),
+    },
+    rowComments: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
     },
   });
 

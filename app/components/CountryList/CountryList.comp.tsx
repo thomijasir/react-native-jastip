@@ -1,14 +1,16 @@
 import React, { FC } from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
 import Style from './CountryList.style';
 
-export type ICountryListCompProps = {};
+export type ICountryListCompProps = {
+  onPress: (val: string) => void;
+};
 
 export const CountryListCompDefaultProps = {};
 
 export const CountryListCompNamespace = 'CountryListComp';
 
-const CountryListComp: FC<ICountryListCompProps> = () => {
+const CountryListComp: FC<ICountryListCompProps> = ({ onPress }) => {
   const DATA = [
     {
       id: 'a',
@@ -18,27 +20,27 @@ const CountryListComp: FC<ICountryListCompProps> = () => {
     {
       id: 'b',
       picture: require('../../assets/icons/flags/flag-sg.png'),
-      name: 'Indonesia',
+      name: 'Singapore',
     },
     {
       id: 'c',
       picture: require('../../assets/icons/flags/flag-us.png'),
-      name: 'Indonesia',
+      name: 'malaysia',
     },
     {
       id: 'd',
       picture: require('../../assets/icons/flags/flag-jp.png'),
-      name: 'Indonesia',
+      name: 'japan',
     },
     {
       id: 'e',
       picture: require('../../assets/icons/flags/flag-kr.png'),
-      name: 'Indonesia',
+      name: 'korea',
     },
     {
       id: 'f',
       picture: require('../../assets/icons/flags/flag-th.png'),
-      name: 'Indonesia',
+      name: 'thailand',
     },
   ];
   return (
@@ -49,9 +51,14 @@ const CountryListComp: FC<ICountryListCompProps> = () => {
       </View>
       <View style={Style().flags}>
         {DATA.map((item) => (
-          <View style={Style().flag} key={item.id}>
+          <Pressable
+            onPress={() => {
+              onPress(item.name);
+            }}
+            style={Style().flag}
+            key={item.id}>
             <Image source={item.picture} />
-          </View>
+          </Pressable>
         ))}
       </View>
     </View>

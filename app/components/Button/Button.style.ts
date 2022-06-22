@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
   outlineBlack: {
     borderWidth: scaleSize(1),
     borderColor: COLORS.BLACK,
+    backgroundColor: COLORS.WHITE,
   },
   outlinePurple: {
     borderWidth: scaleSize(1),

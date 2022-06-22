@@ -3,6 +3,7 @@ import COLORS from '../../assets/styles/Colors';
 import Layout from '../../assets/styles/Layout';
 import { scaleSize, scaleHeight, scaleWidth } from '../../assets/styles/Mixins';
 import {
+  FONT_SIZE_10,
   FONT_SIZE_12,
   FONT_SIZE_14,
   FONT_SIZE_16,
@@ -176,10 +177,22 @@ const styles = () =>
       color: COLORS.BLACK,
       fontSize: FONT_SIZE_16,
       lineHeight: FONT_SIZE_24,
-      marginTop: scaleSize(2),
     },
     footerBtn: {
       flexBasis: scaleSize(100),
+    },
+    textStatus: {
+      fontWeight: 'bold',
+      color: '#e94738',
+      fontSize: FONT_SIZE_12,
+    },
+    notesInput: {},
+    noteInputText: {
+      fontWeight: 'bold',
+      fontSize: FONT_SIZE_16,
+      lineHeight: FONT_SIZE_24,
+      marginTop: scaleSize(16),
+      marginBottom: scaleSize(6),
     },
   });
 

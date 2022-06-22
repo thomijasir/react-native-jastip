@@ -2,13 +2,19 @@ import React, { FC } from 'react';
 import { Image, Text, View, Button, Alert } from 'react-native';
 import Style from './BoxBalance.style';
 
-export type IBoxBalanceCompProps = {};
+export type IBoxBalanceCompProps = {
+  balance: string;
+  credits: string;
+};
 
-export const BoxBalanceCompDefaultProps = {};
+export const BoxBalanceCompDefaultProps = {
+  balance: 'Loading..',
+  credits: 'Rp. 0',
+};
 
 export const BoxBalanceCompNamespace = 'BoxBalanceComp';
 
-const BoxBalanceComp: FC<IBoxBalanceCompProps> = () => {
+const BoxBalanceComp: FC<IBoxBalanceCompProps> = ({ balance, credits }) => {
   return (
     <View style={[Style().main, Style().shadowProp]}>
       <View style={Style().rowLeft}>
@@ -18,15 +24,15 @@ const BoxBalanceComp: FC<IBoxBalanceCompProps> = () => {
       </View>
       <View style={Style().rowMid}>
         <View>
-          <Text style={Style().title}>Rp 2.500.000</Text>
+          <Text style={Style().title}>{balance}</Text>
         </View>
         <View>
-          <Text style={Style().desc}>Credits Rp 0</Text>
+          <Text style={Style().desc}>Credits {credits}</Text>
         </View>
       </View>
       <View style={Style().rowRight}>
         <Button
-          title="TopUp"
+          title="Top Up"
           onPress={() =>
             Alert.alert('Success', "You're success update dana balance.")
           }

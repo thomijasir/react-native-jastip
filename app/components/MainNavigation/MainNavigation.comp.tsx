@@ -5,6 +5,7 @@ import Style from './MainNavigation.style';
 
 export type IMainNavigationCompProps = {
   navigation: NavigationHelpers<ParamListBase>;
+  isAvailableCart: boolean;
 };
 
 export const MainNavigationCompDefaultProps = {};
@@ -12,7 +13,7 @@ export const MainNavigationCompDefaultProps = {};
 export const MainNavigationCompNamespace = 'MainNavigationComp';
 
 const MainNavigationComp: FC<IMainNavigationCompProps> = (props) => {
-  const { navigation } = props;
+  const { navigation, isAvailableCart } = props;
   return (
     <View style={Style().main}>
       <View style={Style().nav}>
@@ -37,9 +38,15 @@ const MainNavigationComp: FC<IMainNavigationCompProps> = (props) => {
         <TouchableOpacity
           style={Style().navItem}
           onPress={() => navigation.navigate('Cart')}>
-          <Image
-            source={require('../../assets/icons/shopping-cart-icon.png')}
-          />
+          {isAvailableCart ? (
+            <Image
+              source={require('../../assets/icons/shopping-cart-avail-icon.png')}
+            />
+          ) : (
+            <Image
+              source={require('../../assets/icons/shopping-cart-icon.png')}
+            />
+          )}
           <Text>Carts</Text>
         </TouchableOpacity>
         <TouchableOpacity

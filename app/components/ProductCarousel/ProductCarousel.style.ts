@@ -16,7 +16,7 @@ const styles = () =>
       display: 'flex',
       borderRadius: scaleSize(8),
       width: scaleWidth(170),
-      marginLeft: scaleSize(12),
+      marginRight: scaleSize(12),
     },
     colTop: {
       marginBottom: scaleSize(8),

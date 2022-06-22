@@ -1,7 +1,24 @@
 export const formatIDR = (amount: number) => {
   const addedSeparator = amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.');
   const decimalFormatted = addedSeparator.replace(/.(?=[^.]*$)/, ',');
-  return `Rp. ${addedSeparator}`;
+  return `Rp. ${decimalFormatted}`;
+};
+
+export const formatRupiah = (value: string) => {
+  const minus = parseInt(value, 10) < 0 ? '-' : '';
+  let rupiah = '';
+  const angkarev = Math.abs(parseInt(value, 10))
+    .toString()
+    .split('')
+    .reverse()
+    .join('');
+  for (let i = 0; i < angkarev.length; i += 1)
+    if (i % 3 === 0) rupiah += `${angkarev.substr(i, 3)}.`;
+
+  return `${minus}Rp ${rupiah
+    .split('', rupiah.length - 1)
+    .reverse()
+    .join('')}`;
 };
 
 export const formatIDRNoDecimal = (amount: number | string) => {

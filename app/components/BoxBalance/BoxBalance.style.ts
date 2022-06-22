@@ -5,9 +5,6 @@ import {
   scaleFont,
   scaleSize,
 } from '../../assets/styles/Mixins';
-import Colors from '../../assets/styles/Colors';
-import Layout from '../../assets/styles/Layout';
-
 const styles = () =>
   StyleSheet.create({
     main: {
@@ -24,7 +21,7 @@ const styles = () =>
       flex: 1,
       display: 'flex',
     },
-    rowRight: { flexBasis: scaleSize(80) },
+    rowRight: { flexBasis: scaleSize(90) },
     title: {
       fontWeight: 'bold',
       fontSize: scaleFont(16),

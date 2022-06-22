@@ -16,6 +16,8 @@ const styles = () =>
       bottom: 0,
       paddingHorizontal: scaleSize(16),
       paddingBottom: scaleSize(18),
+      zIndex: 2,
+      elevation: 2,
     },
     nav: {
       display: 'flex',

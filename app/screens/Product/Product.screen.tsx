@@ -8,13 +8,14 @@ import {
   TouchableOpacity,
   Modal,
   Alert,
+  Pressable,
 } from 'react-native';
 import Toast from 'react-native-simple-toast';
 import { RouteProp } from '@react-navigation/native';
 import { NavigationHelpers, ParamListBase } from '@react-navigation/core';
 import ContentArea from '../../components/ContentArea/ContentArea.comp';
 import DeviderComp from '../../components/Devider/Devider.comp';
-import { formatIDRNoDecimal } from '../../utils/Currency';
+import { formatRupiah } from '../../utils/Currency';
 import { limitString } from '../../utils/Helper';
 import { shortDate } from '../../utils/Time';
 import Style from './Product.style';
@@ -22,6 +23,7 @@ import GS from '../../assets/styles/General';
 import ButtonComp from '../../components/Button/Button.comp';
 import { AppContext } from '../../stores/AppProvider';
 import { SET_CARTS } from '../../stores/AppReducers';
+import useApi from '../../hooks/useApi';
 
 type RootStackParamList = {
   productId: any;
@@ -39,24 +41,27 @@ export const ProductScreenNamespace = 'ProductScreen';
 const ProductScreen: FC<IProductScreenProps> = ({ route, navigation }) => {
   const context = useContext(AppContext);
 
+  const client = useApi();
+
   const [state, mState] = useState({
     showModal: false,
+    showMore: false,
     productData: {
       product: {
         id: 1,
-        productName: 'Adidas All-Star',
-        productDescription: 'Adidas shoes blyat',
-        price: 10000,
-        openPreOrderDate: '2022-07-07',
-        sellerReturnDate: '2022-07-11',
+        productName: '',
+        productDescription: '',
+        price: 0,
+        openPreOrderDate: '',
+        sellerReturnDate: '',
         productImageUrl: 'https://picsum.photos/200/300',
       },
       user: {
         id: 1,
-        name: 'Thomi Jasir',
-        location: 'Singapore',
-        rating: '4,5',
-        lastOnline: '10 minutes ago',
+        name: '',
+        location: '',
+        rating: '',
+        lastOnline: '',
         picture: 'https://picsum.photos/50',
       },
     },
@@ -70,7 +75,29 @@ const ProductScreen: FC<IProductScreenProps> = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    console.log('PRODUCT DETAILS: ', route.params?.productId);
+    client.getProductDetail(route.params?.productId).then((res) => {
+      setState({
+        productData: {
+          product: {
+            id: res.id,
+            productName: res.productName,
+            productDescription: res.productDescription,
+            price: res.price,
+            openPreOrderDate: res.openPreOrderDate,
+            sellerReturnDate: res.sellerReturnDate,
+            productImageUrl: res.productImageUrl,
+          },
+          user: {
+            id: res.seller.id,
+            name: res.seller.name,
+            location: res.seller.location,
+            rating: res.seller.rating,
+            lastOnline: res.seller.lastOnline,
+            picture: res.seller.imageUrl,
+          },
+        },
+      });
+    });
   }, []);
 
   const handleAddToCart = () => {
@@ -82,18 +109,24 @@ const ProductScreen: FC<IProductScreenProps> = ({ route, navigation }) => {
     const newProduct = [...context.carts];
     const cartData = {
       ...state.productData,
+      productQty: 1,
       id: getId,
     };
     const indexId = newProduct.findIndex((x: any) => x.id === getId);
     if (indexId < 0) {
       newProduct.push(cartData);
       context.setContext(newProduct, SET_CARTS);
-      Toast.show('Product Added');
+      Toast.show('Product added');
       setTimeout(() => {
         navigation.goBack();
       }, 1000);
     } else {
-      Toast.show('Product already in the cart.');
+      newProduct[indexId].productQty += 1;
+      context.setContext(newProduct, SET_CARTS);
+      Toast.show('Product add more to cart');
+      setTimeout(() => {
+        navigation.goBack();
+      }, 1000);
     }
   };
 
@@ -133,17 +166,14 @@ const ProductScreen: FC<IProductScreenProps> = ({ route, navigation }) => {
       <ScrollView>
         <Image
           style={Style().productImage}
-          source={{ uri: 'https://picsum.photos/200/300' }}
+          source={{ uri: state.productData.product.productImageUrl }}
         />
         <ContentArea>
           <Text style={Style().price}>
-            {formatIDRNoDecimal(state.productData.product.price)}
+            {formatRupiah(state.productData.product.price.toString())}
           </Text>
           <Text style={Style().desc}>
-            {limitString(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-              200,
-            )}
+            {state.productData.product.productName}
           </Text>
           <View style={Style().productDate}>
             <Text>
@@ -164,10 +194,16 @@ const ProductScreen: FC<IProductScreenProps> = ({ route, navigation }) => {
         <ContentArea>
           <Text style={Style().titleDesc}>Product Description :</Text>
           <Text style={Style().productDesc}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquet
-            morbi diam urna semper ultrices neque.
+            {state.showMore
+              ? state.productData.product.productDescription
+              : limitString(state.productData.product.productDescription, 200)}
           </Text>
-          <Text style={Style().productMore}>View More</Text>
+          <Pressable
+            onPress={() => {
+              setState({ showMore: !state.showMore });
+            }}>
+            <Text style={Style().productMore}>View More</Text>
+          </Pressable>
         </ContentArea>
         <DeviderComp />
         <ContentArea>
@@ -194,7 +230,7 @@ const ProductScreen: FC<IProductScreenProps> = ({ route, navigation }) => {
             <View style={Style().rowRating}>
               <Image source={require('../../assets/icons/star-icon.png')} />
               <Text style={Style().ratingText}>
-                {state.productData.user.rating}/5
+                {state.productData.user.rating} / 5
               </Text>
             </View>
           </View>

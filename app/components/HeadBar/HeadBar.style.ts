@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { scaleHeight, scaleWidth, scaleSize } from '../../assets/styles/Mixins';
 import COLORS from '../../assets/styles/Colors';
 import Layout from '../../assets/styles/Layout';
@@ -22,7 +22,7 @@ const styles = () =>
     rowInputFindIcon: {
       position: 'absolute',
       right: scaleSize(12),
-      top: scaleSize(9),
+      top: Platform.OS === 'ios' ? scaleSize(4) : scaleSize(9),
     },
     rowIcon: {
       flex: 1,

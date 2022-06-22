@@ -5,11 +5,14 @@ import AppProvider, { AppContext } from './stores/AppProvider';
 import HomeScreen from './screens/Home/Home.screen';
 import AboutScreen from './screens/About/About.screen';
 import ProductScreen from './screens/Product/Product.screen';
+import ProductFilterScreen from './screens/ProductFilter/ProductFilter.screen';
 import CartScreen from './screens/Cart/Cart.screen';
 import PaymentScreen from './screens/Payment/Payment.screen';
 import PaymentResultScreen from './screens/PaymentResult/PaymentResult.screen';
 import FeedScreen from './screens/Feed/Feed.screen';
 import ProfileScreen from './screens/Profile/Profile.screen';
+import LoginScreen from './screens/Login/Login.screen';
+import BindingScreen from './screens/Binding/Binding.screen';
 import COLORS from './assets/styles/Colors';
 
 const Stack = createNativeStackNavigator();
@@ -25,7 +28,13 @@ const App = () => {
             headerTintColor: 'white',
             headerStyle: { backgroundColor: COLORS.BLACK },
           }}
-          initialRouteName="Home">
+          initialRouteName="Login">
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen
+            name="Binding"
+            component={BindingScreen}
+            options={{ title: 'Bind Dana Account', headerShown: true }}
+          />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen
             name="Feed"
@@ -46,6 +55,11 @@ const App = () => {
             name="Product"
             component={ProductScreen}
             options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="ProductFilter"
+            component={ProductFilterScreen}
+            options={{ title: 'Product Country', headerShown: true }}
           />
           <Stack.Screen
             name="Cart"

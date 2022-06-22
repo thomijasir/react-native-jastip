@@ -4,6 +4,7 @@ export interface IAppContext {
   loadingState: any;
   errorState: any;
   carts: any;
+  profile: any;
 }
 
 // INITIAL STATE
@@ -19,6 +20,7 @@ export const initialState: any = {
       'Opps, please check app configuration or service that might cause this error.',
   },
   carts: [],
+  profile: {},
 };
 
 // export const makeInitialState = (): IAppContext => {
@@ -33,6 +35,7 @@ export const initialState: any = {
 export const SET_LOADING = 'SET_LOADING';
 export const SET_ERROR = 'SET_ERROR';
 export const SET_CARTS = 'SET_CARTS';
+export const SET_PROFILE = 'SET_PROFILE';
 
 // REDUCERS
 export default (state: IAppContext, action: any) => {
@@ -51,6 +54,11 @@ export default (state: IAppContext, action: any) => {
       return {
         ...state,
         carts: action.payload,
+      };
+    case SET_PROFILE:
+      return {
+        ...state,
+        profile: action.payload,
       };
     default:
       return state;

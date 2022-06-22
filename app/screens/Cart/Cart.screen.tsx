@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useRef, useState } from 'react';
 import {
   Text,
   View,
@@ -14,7 +14,7 @@ import GS from '../../assets/styles/General';
 import ButtonComp from '../../components/Button/Button.comp';
 import ContentArea from '../../components/ContentArea/ContentArea.comp';
 import DeviderComp from '../../components/Devider/Devider.comp';
-import { formatIDR } from '../../utils/Currency';
+import { formatRupiah } from '../../utils/Currency';
 import { limitString } from '../../utils/Helper';
 import { shortDate } from '../../utils/Time';
 import Style from './Cart.style';
@@ -70,8 +70,10 @@ export const CartScreenNamespace = 'CartScreen';
 const CartScreen: FC<ICartScreenProps> = ({ navigation }) => {
   const context = useContext(AppContext);
   const [state, mState] = useState({
-    cartList: [],
+    cartList: context.carts || [],
   });
+
+  const firstUpdate = useRef(true);
 
   useEffect(() => {
     const createCart = context.carts.map((x: any) => {
@@ -84,10 +86,15 @@ const CartScreen: FC<ICartScreenProps> = ({ navigation }) => {
       };
     });
     setState({ cartList: createCart });
-    return () => {
-      context.setContext(state.cartList, SET_CARTS);
-    };
   }, []);
+
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    context.setContext(state.cartList, SET_CARTS);
+  }, [state.cartList]);
 
   const setState = (obj: any) => {
     mState((prevState: any) => ({
@@ -113,7 +120,7 @@ const CartScreen: FC<ICartScreenProps> = ({ navigation }) => {
     if (getIndex < 0) {
       Toast.show('Error! Handle Decrese');
     } else {
-      if (newCartList[getIndex].productQty <= 0) {
+      if (newCartList[getIndex].productQty <= 1) {
         newCartList[getIndex].productQty = 1;
       } else {
         newCartList[getIndex].productQty -= 1;
@@ -184,7 +191,7 @@ const CartScreen: FC<ICartScreenProps> = ({ navigation }) => {
                   </Text>
                 </View>
                 <Text style={Style().productPrice}>
-                  {formatIDR(cart.product.price)}
+                  {formatRupiah(cart.product.price)}
                 </Text>
               </View>
             </View>

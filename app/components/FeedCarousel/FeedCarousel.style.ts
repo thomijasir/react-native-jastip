@@ -26,8 +26,8 @@ const styles = () =>
     },
     rowLeftPicture: {
       width: scaleWidth(60),
-      height: scaleHeight(76),
-      borderRadius: scaleSize(76 / 2),
+      height: scaleHeight(60),
+      borderRadius: scaleSize(60 / 2),
       borderColor: COLORS.WHITE,
       borderWidth: scaleSize(2),
     },

@@ -15,7 +15,7 @@ const styles = () =>
       position: 'absolute',
       bottom: 0,
       paddingHorizontal: scaleSize(16),
-      paddingBottom: scaleSize(18),
+      paddingBottom: scaleSize(24),
       zIndex: 2,
       elevation: 2,
     },

@@ -36,6 +36,7 @@ const FeedCarouselComp: FC<IFeedCarouselCompProps> = ({ feedList }) => {
         picture: item.imageUrl,
         text: item.message,
         date: item.returnDate,
+        comment: item.commentCount,
       };
     });
   }, [feedList]);
@@ -78,7 +79,10 @@ const FeedCarouselComp: FC<IFeedCarouselCompProps> = ({ feedList }) => {
                 source={require('../../assets/icons/w-comments-icon.png')}
               />
             </View>
-            <Text style={Style().rowRightDateText}> 4 Comments</Text>
+            <Text style={Style().rowRightDateText}>
+              {' '}
+              {item.comment} Comments
+            </Text>
           </View>
         </View>
       </View>

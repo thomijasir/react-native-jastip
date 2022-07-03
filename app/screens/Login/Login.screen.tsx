@@ -23,7 +23,10 @@ export const LoginScreenNamespace = 'LoginScreen';
 
 const LoginScreen: FC<ILoginScreenProps> = ({ navigation }) => {
   const client = useApi();
-  const [phone, setNumber] = React.useState<string>('0812121213');
+  // TEST ACCOUNT
+  // NUMBER 0812121213 / 0812121211
+  // PIN 123123
+  const [phone, setNumber] = React.useState<string>('');
 
   const openWebView = () => {
     client.bindingInit(phone).then((uri) => {
@@ -31,7 +34,7 @@ const LoginScreen: FC<ILoginScreenProps> = ({ navigation }) => {
     });
   };
 
-  const onChangeNumber = (val: any) => {
+  const onChangeNumber = (val: string) => {
     setNumber(val);
   };
 
@@ -41,10 +44,10 @@ const LoginScreen: FC<ILoginScreenProps> = ({ navigation }) => {
         <View style={Style().appImage}>
           <Image
             style={Style().image}
-            source={require('../../assets/images/logo-jastip-app.png')}
+            source={require('../../assets/images/login-image-screen.png')}
           />
         </View>
-        <Text style={General.title}>Welcome to Jastip</Text>
+        <Text style={[General.title, Style().title]}>Welcome to Jastip</Text>
         {/* <TextInput
           style={Style().input}
           onChangeText={onChangeNumber}

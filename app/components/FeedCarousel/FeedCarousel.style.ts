@@ -25,8 +25,8 @@ const styles = () =>
       flexBasis: scaleSize(70),
     },
     rowLeftPicture: {
-      width: scaleWidth(60),
-      height: scaleHeight(60),
+      width: scaleSize(60),
+      height: scaleSize(60),
       borderRadius: scaleSize(60 / 2),
       borderColor: COLORS.WHITE,
       borderWidth: scaleSize(2),

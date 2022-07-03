@@ -48,7 +48,7 @@ const ProductListComp: FC<IProductListCompProps> = ({
             />
             <View style={Style().itemInfo}>
               <Text style={Style().itemName}>
-                {limitString(dataItem.name, 20)}
+                {limitString(dataItem.name, 19)}
               </Text>
               <Text style={Style().itemPrice}>
                 {formatRupiah(dataItem.price)}

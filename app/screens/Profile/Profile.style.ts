@@ -17,9 +17,8 @@ const styles = () =>
       width: scaleWidth(
         Dimensions.get('window').width + (Platform.OS === 'ios' ? 45 : 0),
       ),
-      // height: scaleHeight(1115),
-
-      height: scaleHeight(850),
+      height: scaleHeight(1050),
+      // height: scaleHeight(850),
       resizeMode: 'stretch',
     },
   });

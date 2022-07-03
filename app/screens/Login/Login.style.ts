@@ -18,14 +18,17 @@ const styles = () =>
       marginBottom: scaleSize(24),
     },
     image: {
-      // width: scaleWidth(64),
+      // width: '80%',
       // height: scaleHeight(64),
-      // resizeMode: 'stretch',
+      resizeMode: 'stretch',
     },
     spacing: {
-      marginVertical: scaleSize(16),
+      marginVertical: scaleSize(8),
     },
 
+    title: {
+      ...Layout.center,
+    },
     btnLogin: {
       position: 'absolute',
       width: '100%',
@@ -38,7 +41,7 @@ const styles = () =>
     input: {
       marginTop: scaleSize(24),
       marginBottom: scaleSize(12),
-      // borderWidth: 1,
+      borderWidth: 1,
       paddingVertical: scaleSize(10),
       paddingHorizontal: scaleSize(16),
       backgroundColor: COLORS.WHITE,
